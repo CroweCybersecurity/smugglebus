@@ -31,7 +31,7 @@ When imaged, the following will reside in the SmuggleBus home folder under /home
 |hashgrab.py|	Python code that will identify, mount the Windows OS partition, export the hashes, and setup the backdoor. (Original HashGrab2 code created by s3my0n, under GNU General Public License)|
 |public_key.pem|	Public key used to encrypt the exported hives prior to writing to flash memory.|
 |shell_files|	Placeholder location for the backdoor implant files.|
-|reged|	Registry editor, export and import tool. Used when injecting backdoors from Linux OS. (Part of chntpw, the Offline Windows Password Editor, under GNU Lesser General Public License)|
+|reged|	Registry editor, export and import tool. Used when injecting backdoors from Linux OS. (Part of chntpw, the Offline Windows Password Editor, under GNU Lesser General Public License.) https://github.com/rescatux/chntpw|
 |.profile| Used to Launch startup.sh when TinyCore is fully loaded|
 
 
