@@ -21,7 +21,7 @@ A typical attack flow would consist of the following:
 
 
 ## Operating System
-The SmuggleBus is built on Tiny Core Linux OS, with only the essential packages loaded in. No networking is loaded to avoid tripping any Network Access Controls. 
+The SmuggleBus is built on Tiny Core Linux OS (http://distro.ibiblio.org/tinycorelinux), with only the essential packages loaded in. No networking is loaded to avoid tripping any Network Access Controls. 
 
 When imaged, the following will reside in the SmuggleBus home folder under /home/tc/:
 
