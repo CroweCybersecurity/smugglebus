@@ -107,9 +107,10 @@ Use spoolsv.c and after updating the URL, compile it with MinGW (x86_64-w64-ming
 5. Copy your UUID from the last line and append home=UUID=”YOUR UUID” and opt=UUID=”YOUR UUID”. This should all be on one line
     - Example: 
     APPEND initrd=/boot/core.gz quiet norestore waitusb=5:UUID="a13c5174-bde8-48f2-ac19-d9a6b73bb7c5" tce=UUID="a13c5174-bde8-48f2-ac19-d9a6b73bb7c5" home=UUID="a13c5174-bde8-48f2-ac19-d9a6b73bb7c5" opt=UUID="a13c5174-bde8-48f2-ac19-d9a6b73bb7c5"
-6. Download Python and OpenSSL tcz packages from http://distro.ibiblio.org/tinycorelinux/8.x/x86/tcz/
+6. Download Python, OpenSSL, and NTFS-3G tcz packages (python.tcz, openssl.tcz, ntfs-3g.tcz) from http://distro.ibiblio.org/tinycorelinux/8.x/x86/tcz/
 7. Place Python and OpenSSL inside /tce/optional
 8. Edit OnBoot.lst and add the entries, separated by a new line:
     - python.tcz 
     - openssl.tcz
-9. Overwrite tc folder with the one in github.
+    - ntfs-3g.tcz
+9. Overwrite tc folder with the one in github (/home/tc)
