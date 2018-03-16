@@ -7,6 +7,7 @@ FILE_DIRECTORY=''
 SAM_FILE='SAM.enc'
 SYSTEM_FILE='SYSTEM.enc'
 SECURITY_FILE='SECURITY.enc'
+SOFTWARE_FILE='SOFTWARE.enc'
 RUN_SECRETSDUMP=false
 SECRETSDUMP='secretsdump.py'
 
@@ -15,7 +16,7 @@ function print_usage () {
     printf "\t%s\n" "$(basename $0) [arguments]"
     
     printf "%s\n" "Required arguments:"
-    printf "\t%-15s %-54s\n" "-i DIRECTORY" "Directory with SAM/SYSTEM/SECURITY & key.enc files"
+    printf "\t%-15s %-54s\n" "-i DIRECTORY" "Directory with SAM/SYSTEM/SECURITY/SOFTWARE & key.enc files"
     printf "\t%-15s %-54s\n" "-o DIRECTORY" "Output location"
     printf "\t%-15s %-54s\n" "-p FILE" "Private key location"
 
@@ -63,8 +64,8 @@ if [ -z "$OUTPUT_LOCATION" ] || [ -z "$PRIVATE_KEY" ] || [ -z "$FILE_DIRECTORY" 
 fi
 
 # Look for the SAM/SYSTEM/SECURITY files
-if [ ! -e $FILE_DIRECTORY/$SAM_FILE ] || [ ! -e $FILE_DIRECTORY/$SYSTEM_FILE ] || [ ! -e $FILE_DIRECTORY/$SECURITY_FILE ]; then
-    echo "SAM/SYSTEM/SECURITY files not found"
+if [ ! -e $FILE_DIRECTORY/$SAM_FILE ] || [ ! -e $FILE_DIRECTORY/$SYSTEM_FILE ] || [ ! -e $FILE_DIRECTORY/$SECURITY_FILE ] || [ ! -e $FILE_DIRECTORY/$SOFTWARE_FILE; then
+    echo "SAM/SYSTEM/SECURITY/SOFTWARE files not found"
     exit 1
 fi
 
@@ -89,6 +90,7 @@ KEY=$(openssl rsautl -decrypt -inkey $PRIVATE_KEY -in $FILE_DIRECTORY/$ENCRYPTED
 openssl enc -d -aes-256-cbc -md sha256 -in $FILE_DIRECTORY/$SAM_FILE -out $OUTPUT_LOCATION/SAM -k $KEY
 openssl enc -d -aes-256-cbc -md sha256 -in $FILE_DIRECTORY/$SYSTEM_FILE -out $OUTPUT_LOCATION/SYSTEM -k $KEY
 openssl enc -d -aes-256-cbc -md sha256 -in $FILE_DIRECTORY/$SECURITY_FILE -out $OUTPUT_LOCATION/SECURITY -k $KEY
+openssl enc -d -aes-256-cbc -md sha256 -in $FILE_DIRECTORY/$SOFTWARE_FILE -out $OUTPUT_LOCATION/SOFTWARE -k $KEY
 KEY=''
 
 # Run secretsdump.py
